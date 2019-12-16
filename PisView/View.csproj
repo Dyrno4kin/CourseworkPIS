@@ -114,6 +114,9 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormPeople.resx">
+      <DependentUpon>FormPeople.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPrivilege.resx">
       <DependentUpon>FormPrivilege.cs</DependentUpon>
     </EmbeddedResource>
