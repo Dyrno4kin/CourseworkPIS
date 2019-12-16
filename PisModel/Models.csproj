@@ -64,6 +64,18 @@
     <Compile Include="Migrations\201912142113036_FristMigration.designer.cs">
       <DependentUpon>201912142113036_FristMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912160605066_MigrateDB.cs" />
+    <Compile Include="Migrations\201912160605066_MigrateDB.Designer.cs">
+      <DependentUpon>201912160605066_MigrateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912160629540_MigrateDB1.cs" />
+    <Compile Include="Migrations\201912160629540_MigrateDB1.Designer.cs">
+      <DependentUpon>201912160629540_MigrateDB1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912161720564_TrirdMigration1.cs" />
+    <Compile Include="Migrations\201912161720564_TrirdMigration1.Designer.cs">
+      <DependentUpon>201912161720564_TrirdMigration1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="People.cs" />
     <Compile Include="PeoplePrivilege.cs" />
@@ -81,6 +93,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201912142113036_FristMigration.resx">
       <DependentUpon>201912142113036_FristMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912160605066_MigrateDB.resx">
+      <DependentUpon>201912160605066_MigrateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912160629540_MigrateDB1.resx">
+      <DependentUpon>201912160629540_MigrateDB1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912161720564_TrirdMigration1.resx">
+      <DependentUpon>201912161720564_TrirdMigration1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
