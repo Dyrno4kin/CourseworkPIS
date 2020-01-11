@@ -7,14 +7,264 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Model;
+using Model.ViewModels;
 
 namespace View
 {
     public partial class FormPeople : Form
     {
+        public int Id { set { id = value; } }
+        private int? id;
+        private List<PeoplePrivilegeViewModel> peoplePrivileges;
+
+        public PeoplePrivilegeViewModel Model
+        {
+            set { model = value; }
+            get
+            {
+                return model;
+            }
+        }
+        private PeoplePrivilegeViewModel model;
+
         public FormPeople()
         {
             InitializeComponent();
+        }
+
+        private void FormPeople_Load(object sender, EventArgs e)
+        {
+            try
+            {
+
+                List<Apartment> list = APIClient.GetRequest<List<Apartment>>("api/People/GetListA/Радищева 44");
+                if (list != null)
+                {
+                    //добавить еще один запрос чтобы он выводил квартиры по выбранному дому
+                    comboBoxNumberApartment.DisplayMember = "NumberApartment";
+                    comboBoxNumberApartment.ValueMember = "Id";
+                    comboBoxNumberApartment.DataSource = list;
+                    comboBoxNumberApartment.SelectedItem = null;
+
+                    //comboBoxNumberApartment.DataSource = list;
+                    //comboBoxNumberApartment.SelectedItem = null;
+                }
+
+                List<Privilege> listPrivilege = APIClient.GetRequest<List<Privilege>>("api/Privilege/GetList");
+                if (listPrivilege != null)
+                {
+                    comboBoxPrivilege.DisplayMember = "NamePrivilege";
+                    comboBoxPrivilege.ValueMember = "Id";
+                    comboBoxPrivilege.DataSource = listPrivilege;
+                    comboBoxPrivilege.SelectedItem = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+            }
+
+            if (id.HasValue)
+            {
+
+                try
+                {
+                    PeopleViewModel view = APIClient.GetRequest<PeopleViewModel>("api/People/Get/" + id.Value);
+                    textBoxName.Text = view.FIO;
+                    comboBoxOwner.Text = view.Owner.ToString();
+                    comboBoxNumberApartment.SelectedValue = view.ApartmentId;
+                    peoplePrivileges = view.PeoplePrivileges;
+                    LoadData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                peoplePrivileges = new List<PeoplePrivilegeViewModel>();
+            }
+
+           
+        }
+
+        private void LoadData()
+        {
+            try
+            {
+                if (peoplePrivileges != null)
+                {
+                    dataGridView.DataSource = null;
+                    dataGridView.DataSource = peoplePrivileges;
+                    dataGridView.Columns[0].Visible = false;
+                    dataGridView.Columns[1].Visible = false;
+                    dataGridView.Columns[2].Visible = false;
+                    dataGridView.Columns[3].Visible = true;
+                    dataGridView.Columns[3].AutoSizeMode =
+                    DataGridViewAutoSizeColumnMode.Fill; 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            if (comboBoxPrivilege.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите льготу", "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+                return;
+            }
+           // int count = 0;
+            int count = 0;
+            while (count <= (Convert.ToInt32(dataGridView.RowCount.ToString()) - 1))
+            {
+                if (dataGridView[3, count].Value.ToString() == comboBoxPrivilege.Text.ToString())
+                {
+                    MessageBox.Show("У клиента уже есть такая льгота", "Сообщение",
+               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                    
+                count++;
+            }
+            try
+            {
+                Privilege view = APIClient.GetRequest<Privilege>("api/Privilege/Get/" + Convert.ToInt32(comboBoxPrivilege.SelectedValue));
+                model = new PeoplePrivilegeViewModel
+                {
+                    PrivilegeId = Convert.ToInt32(comboBoxPrivilege.SelectedValue),
+                    NamePrivilege = comboBoxPrivilege.Text,
+                    Multiplier = view.Multiplier
+                };
+                peoplePrivileges.Add(Model);
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
+               MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+            }
+            LoadData();
+        }
+
+        private void buttonDel_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        peoplePrivileges.RemoveAt(dataGridView.SelectedRows[0].Cells[0].RowIndex);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
+                    }
+                    LoadData();
+                }
+            }
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxName.Text))
+            {
+                MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+                return;
+            }
+            if (string.IsNullOrEmpty(comboBoxNumberApartment.Text))
+            {
+                MessageBox.Show("Выберите квартиру", "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+                return;
+            }
+            if (string.IsNullOrEmpty(comboBoxOwner.Text))
+            {
+                MessageBox.Show("Выберите владельца", "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                List<PeoplePrivilege> peoplePrivilegesBM = new List<PeoplePrivilege>();
+                for (int i = 0; i < peoplePrivileges.Count; ++i)
+                {
+                    peoplePrivilegesBM.Add(new PeoplePrivilege
+                    {
+                        Id = peoplePrivileges[i].Id,
+                        PeopleId = peoplePrivileges[i].PeopleId,
+                        PrivilegeId = peoplePrivileges[i].PrivilegeId
+                    });
+                }
+                if (id.HasValue)
+                {
+                    APIClient.PostRequest<People,
+                    bool>("api/People/UpdElement", new People
+                    {
+                        Id = id.Value,
+                        FIO = textBoxName.Text,
+                        Owner = Convert.ToBoolean(comboBoxOwner.Text),
+                        ApartmentId = Convert.ToInt32(comboBoxNumberApartment.SelectedValue),
+                        PeoplePrivileges = peoplePrivilegesBM
+                    });
+                }
+                else
+                {
+                    APIClient.PostRequest<People, bool>("api/People/AddElement", new People
+                    {
+                        FIO = textBoxName.Text,
+                        Owner = Convert.ToBoolean(comboBoxOwner.Text),
+                        ApartmentId = Convert.ToInt32(comboBoxNumberApartment.SelectedValue),
+                        PeoplePrivileges = peoplePrivilegesBM
+                    });
+                }
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
+               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void dataGridView_MouseClick(object sender, MouseEventArgs e)
+        {
+            id = Convert.ToInt32(dataGridView.CurrentRow.Cells[2].Value);
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                try
+                {
+                    comboBoxPrivilege.SelectedValue = id.Value;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

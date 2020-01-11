@@ -1,4 +1,6 @@
 ﻿using Model;
+using Model.BindingModels;
+using Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,20 +22,21 @@ namespace PisRestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetList()
         {
-            List<People> result = context.Peoples.AsEnumerable().Select(rec => new
-           People
+            List<PeopleViewModel> result = context.Peoples.Select(rec => new
+           PeopleViewModel
             {
                 Id = rec.Id,
                 FIO = rec.FIO,
                 Owner = rec.Owner,
-                ApartmentId = rec.ApartmentId,
-                PeoplePrivileges = context.PeoplePrivileges.AsEnumerable()
-            .Where(recPP => recPP.PeopleId == rec.Id)
-           .Select(recPP => new PeoplePrivilege
+                NumberHouse = rec.Apartment.NumberHouse,
+                NumberApartment = rec.Apartment.NumberApartment,
+                PeoplePrivileges = context.PeoplePrivileges
+            .Where(recCI => recCI.PeopleId == rec.Id)
+           .Select(recCI => new PeoplePrivilegeViewModel
            {
-               Id = recPP.Id,
-               PeopleId = recPP.PeopleId,
-               PrivilegeId = recPP.PrivilegeId
+               Id = recCI.Id,
+               PeopleId = recCI.PeopleId,
+               PrivilegeId = recCI.PrivilegeId
            })
            .ToList()
             })
@@ -46,24 +49,26 @@ namespace PisRestApi.Controllers
             return Ok(list);
         }
 
-        public People GetElement(int id)
+        public PeopleViewModel GetElement(int id)
         {
             People element = context.Peoples.FirstOrDefault(rec => rec.Id == id);
             if (element != null)
             {
-                return new People
+                return new PeopleViewModel
                 {
                     Id = element.Id,
                     FIO = element.FIO,
                     Owner = element.Owner,
                     ApartmentId = element.ApartmentId,
-                    PeoplePrivileges = context.PeoplePrivileges.AsEnumerable()
-                    .Where(recPP => recPP.PeopleId== element.Id)
-                    .Select(recPP => new PeoplePrivilege
+                    PeoplePrivileges = context.PeoplePrivileges
+                    .Where(recCI => recCI.PeopleId == element.Id)
+                    .Select(recCI => new PeoplePrivilegeViewModel
                     {
-                        Id = recPP.Id,
-                        PeopleId = recPP.PeopleId,
-                        PrivilegeId = recPP.PrivilegeId
+                        Id = recCI.Id,
+                        PeopleId = recCI.PeopleId,
+                        PrivilegeId = recCI.PrivilegeId,
+                        NamePrivilege = recCI.Privilege.NamePrivilege,
+                        Multiplier = recCI.Privilege.Multiplier
                     })
                     .ToList()
                 };
@@ -83,7 +88,7 @@ namespace PisRestApi.Controllers
         }
 
         [HttpPost]
-        public void AddElement(People model)
+        public void AddElement(PeopleBindingModel model)
         {
             using (var transaction = context.Database.BeginTransaction())
             {
@@ -131,7 +136,7 @@ namespace PisRestApi.Controllers
         }
 
         [HttpPost]
-        public void UpdElement(People model)
+        public void UpdElement(PeopleBindingModel model)
         {
             using (var transaction = context.Database.BeginTransaction())
             {
@@ -153,7 +158,7 @@ namespace PisRestApi.Controllers
                     element.ApartmentId = model.ApartmentId;
                     context.SaveChanges();
                     // обновляем существуюущие компоненты
-                    var privIds = model.PeoplePrivileges.Select(rec =>
+                    var privIds = model.PeoplePrivileges.AsEnumerable().Select(rec =>
                    rec.PrivilegeId).Distinct();
                     var updatePrivileges = context.PeoplePrivileges.Where(rec =>
                    rec.PeopleId == model.Id && privIds.Contains(rec.PrivilegeId));
@@ -167,7 +172,7 @@ namespace PisRestApi.Controllers
                     rec.PeopleId == model.Id && !privIds.Contains(rec.PrivilegeId)));
                     context.SaveChanges();
                     // новые записи
-                    var groupPrivileges = model.PeoplePrivileges
+                    var groupPrivileges = model.PeoplePrivileges.AsEnumerable()
                     .Where(rec => rec.Id == 0)
                    .GroupBy(rec => rec.PrivilegeId)
                    .Select(rec => new
@@ -205,19 +210,19 @@ namespace PisRestApi.Controllers
         }
 
         [HttpPost]
-        public void DelElement(People model)
+        public void DelElement(PeopleBindingModel model)
         {
             using (var transaction = context.Database.BeginTransaction())
             {
                 try
                 {
                     People element = context.Peoples.FirstOrDefault(rec => rec.Id ==
-                   id);
+                   model.Id);
                     if (element != null)
                     {
                         // удаяем записи по льготам при удалении жильца
                         context.PeoplePrivileges.RemoveRange(context.PeoplePrivileges.Where(rec =>
-                        rec.PeopleId == id));
+                        rec.PeopleId == model.Id));
                         context.Peoples.Remove(element);
                         context.SaveChanges();
                     }
@@ -235,5 +240,24 @@ namespace PisRestApi.Controllers
             }
         }
 
+
+        [HttpGet]
+        public IHttpActionResult GetListA(string id)
+        {
+            List<Apartment> result = context.Apartments.AsEnumerable().Where(rec => rec.NumberHouse == id).Select(rec => new Apartment
+            {
+                Id = rec.Id,
+                NumberHouse = rec.NumberHouse,
+                NumberApartment = rec.NumberApartment,
+                ApartmentSize = rec.ApartmentSize
+            })
+            .ToList();
+            var list = result;
+            if (list == null)
+            {
+                InternalServerError(new Exception("Нет данных"));
+            }
+            return Ok(list);
+        }
     }
 }

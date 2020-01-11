@@ -60,6 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apartment.cs" />
+    <Compile Include="BindingModels\PeopleBindingModel.cs" />
+    <Compile Include="BindingModels\PeoplePrivilegeBindingModel.cs" />
+    <Compile Include="BindingModels\PrivilegeBindingModel.cs" />
     <Compile Include="Migrations\201912142113036_FristMigration.cs" />
     <Compile Include="Migrations\201912142113036_FristMigration.designer.cs">
       <DependentUpon>201912142113036_FristMigration.cs</DependentUpon>
@@ -82,6 +85,9 @@
     <Compile Include="PisDbContext.cs" />
     <Compile Include="Privilege.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\PeoplePrivilegeViewModel.cs" />
+    <Compile Include="ViewModels\PeopleViewModel.cs" />
+    <Compile Include="ViewModels\PrivilegeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

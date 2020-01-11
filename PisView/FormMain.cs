@@ -25,7 +25,7 @@ namespace View
 
         private void buttonListPeople_Click(object sender, EventArgs e)
         {
-            var form = new FormPeople();
+            var form = new FormPeoples();
             form.ShowDialog();
         }
 

@@ -130,9 +130,9 @@ namespace View
             }
         }
 
-        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
-            id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+            id = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
             if (dataGridView1.SelectedRows.Count == 1)
             {
                 try
