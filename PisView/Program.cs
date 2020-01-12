@@ -1,15 +1,13 @@
-﻿using Model;
+﻿using Controllers;
+using Model;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Lifetime;
 
 namespace View
 {
-
-
     static class Program
     {
         /// <summary>
@@ -18,10 +16,23 @@ namespace View
         [STAThread]
         static void Main()
         {
-            APIClient.Connect();
+            var container = BuildUnityContainer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain());
+            Application.Run(container.Resolve<FormMain>());
+        }
+
+        public static IUnityContainer BuildUnityContainer()
+        {
+            var currentContainer = new UnityContainer();
+            currentContainer.RegisterType<DbContext, PisDbContext>(new
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<PeopleController>(new
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<PrivilegeController>(new
+           HierarchicalLifetimeManager());
+
+            return currentContainer;
         }
     }
 }

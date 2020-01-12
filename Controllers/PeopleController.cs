@@ -126,7 +126,7 @@ namespace Controllers
                    rec.FIO == model.FIO && rec.Id != model.Id);
                     if (element != null)
                     {
-                        throw new Exception("Уже есть жилец с таким ФИО");
+                        //throw new Exception("Уже есть жилец с таким ФИО");
                     }
                     element = context.Peoples.FirstOrDefault(rec => rec.Id == model.Id);
                     if (element == null)
@@ -232,6 +232,82 @@ namespace Controllers
             return result;
         }
 
-    
+         // Поиск по фамилии или номеру квартиры
+        public List<PeopleViewModel> SearchByFIO(string Fio)
+        {
+            int NumberApart = -1;
+            int num;
+            bool isNum = int.TryParse(Fio, out num);
+            if (isNum)
+            {
+                NumberApart = Convert.ToInt32(Fio);
+            }          
+            List<PeopleViewModel> result = context.Peoples.Where(rec => rec.FIO.StartsWith(Fio) || rec.Apartment.NumberApartment == NumberApart).Select(rec => new
+           PeopleViewModel
+            {
+                Id = rec.Id,
+                FIO = rec.FIO,
+                Owner = rec.Owner,
+                NumberHouse = rec.Apartment.NumberHouse,
+                NumberApartment = rec.Apartment.NumberApartment,
+                PeoplePrivileges = context.PeoplePrivileges
+            .Where(recCI => recCI.PeopleId == rec.Id)
+           .Select(recCI => new PeoplePrivilegeViewModel
+           {
+               Id = recCI.Id,
+               PeopleId = recCI.PeopleId,
+               PrivilegeId = recCI.PrivilegeId
+           })
+           .ToList()
+            })
+            .ToList();
+            return result;
+        }
+
+        //Выборка жильцов по номеру дома
+        public List<PeopleViewModel> SelectByHouseNumber(string HouseNumber)
+        {
+            List<PeopleViewModel> result = context.Peoples.Where(rec => rec.Apartment.NumberHouse.StartsWith(HouseNumber)).Select(rec => new
+           PeopleViewModel
+            {
+                Id = rec.Id,
+                FIO = rec.FIO,
+                Owner = rec.Owner,
+                NumberHouse = rec.Apartment.NumberHouse,
+                NumberApartment = rec.Apartment.NumberApartment
+            })
+            .ToList();
+            return result;
+        }
+
+        //Квартиры в которых количество жильцов больше заданного кол-ва
+        public List<PeopleViewModel> SelectByCountPeople(int CountPeople)
+        {
+            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=PisDatabase;Integrated Security=True";
+            var dc = new DbContext(connectionString);
+            var dt = dc.Database.SqlQuery<PeopleViewModel>("select Apartments.NumberHouse, Apartments.NumberApartment, Count(ApartmentId) as 'CountPeople' from People, Apartments where People.ApartmentId = Apartments.Id Group by Apartments.NumberHouse, Apartments.NumberApartment Having Count(ApartmentId) > "+CountPeople+"");
+            List<PeopleViewModel> result = dt.ToList();
+            return result;
+        }
+        
+        //Расчет жилплощади на одного человека в каждой квартире
+        public List<PeopleViewModel> SelectAverageLivingSpace()
+        {
+            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=PisDatabase;Integrated Security=True";
+            var dc = new DbContext(connectionString);
+            var dt = dc.Database.SqlQuery<PeopleViewModel>("select Apartments.NumberHouse, Apartments.NumberApartment, Apartments.ApartmentSize/Count(ApartmentId) as 'AverageLivingSpace'  from People, Apartments where People.ApartmentId = Apartments.Id Group by Apartments.NumberHouse, Apartments.NumberApartment, Apartments.ApartmentSize");
+            List<PeopleViewModel> result = dt.ToList();
+            return result;
+        }
+
+        //Количество жильцов в каждой квартире
+        public List<PeopleViewModel> SelectCountPeopleInApart()
+        {
+            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=PisDatabase;Integrated Security=True";
+            var dc = new DbContext(connectionString);
+            var dt = dc.Database.SqlQuery<PeopleViewModel>("select Concat(Apartments.NumberHouse, ' кв ', Apartments.NumberApartment) as 'NumberHouse', Count(ApartmentId) as 'CountPeople' from People, Apartments where People.ApartmentId = Apartments.Id Group by Apartments.NumberHouse, Apartments.NumberApartment");
+            List<PeopleViewModel> result = dt.ToList();
+            return result;
+        }
     }
 }

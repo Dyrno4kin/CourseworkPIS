@@ -15,6 +15,9 @@ namespace Model.ViewModels
 
         public string NumberHouse { get; set; }
         public int NumberApartment { get; set; }
+        public int CountPeople { get; set; }
+        public double AverageLivingSpace { get; set; }
+        
 
         public List<PeoplePrivilegeViewModel> PeoplePrivileges { get; set; }
 

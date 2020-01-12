@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "PISModel\Models.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "PISView\View.csproj", "{A24AC1D7-05F8-4172-B8BC-C690D7324B78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PisRestApi", "PisRestApi\PisRestApi.csproj", "{3E61920C-8811-4B23-93EC-3B2D0FE0CF3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Controllers\Controllers.csproj", "{B29B85F1-4A89-4098-8D6B-D36697C1CC23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{A24AC1D7-05F8-4172-B8BC-C690D7324B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A24AC1D7-05F8-4172-B8BC-C690D7324B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A24AC1D7-05F8-4172-B8BC-C690D7324B78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E61920C-8811-4B23-93EC-3B2D0FE0CF3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E61920C-8811-4B23-93EC-3B2D0FE0CF3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E61920C-8811-4B23-93EC-3B2D0FE0CF3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E61920C-8811-4B23-93EC-3B2D0FE0CF3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29B85F1-4A89-4098-8D6B-D36697C1CC23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29B85F1-4A89-4098-8D6B-D36697C1CC23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29B85F1-4A89-4098-8D6B-D36697C1CC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29B85F1-4A89-4098-8D6B-D36697C1CC23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

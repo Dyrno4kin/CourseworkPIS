@@ -7,15 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Controllers;
 using Model;
 using Model.ViewModels;
+using Unity;
 
 namespace View
 {
     public partial class FormPeople : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
         private int? id;
+        private readonly PeopleController service;
+        private readonly PrivilegeController servicePrivilege;
         private List<PeoplePrivilegeViewModel> peoplePrivileges;
 
         public PeoplePrivilegeViewModel Model
@@ -28,9 +34,11 @@ namespace View
         }
         private PeoplePrivilegeViewModel model;
 
-        public FormPeople()
+        public FormPeople(PeopleController service, PrivilegeController servicePrivilege)
         {
             InitializeComponent();
+            this.service = service;
+            this.servicePrivilege = servicePrivilege;
         }
 
         private void FormPeople_Load(object sender, EventArgs e)
@@ -38,20 +46,9 @@ namespace View
             try
             {
 
-                List<Apartment> list = APIClient.GetRequest<List<Apartment>>("api/People/GetListA/Радищева 44");
-                if (list != null)
-                {
-                    //добавить еще один запрос чтобы он выводил квартиры по выбранному дому
-                    comboBoxNumberApartment.DisplayMember = "NumberApartment";
-                    comboBoxNumberApartment.ValueMember = "Id";
-                    comboBoxNumberApartment.DataSource = list;
-                    comboBoxNumberApartment.SelectedItem = null;
+                
 
-                    //comboBoxNumberApartment.DataSource = list;
-                    //comboBoxNumberApartment.SelectedItem = null;
-                }
-
-                List<Privilege> listPrivilege = APIClient.GetRequest<List<Privilege>>("api/Privilege/GetList");
+                List<Privilege> listPrivilege = servicePrivilege.GetList();
                 if (listPrivilege != null)
                 {
                     comboBoxPrivilege.DisplayMember = "NamePrivilege";
@@ -71,10 +68,11 @@ namespace View
 
                 try
                 {
-                    PeopleViewModel view = APIClient.GetRequest<PeopleViewModel>("api/People/Get/" + id.Value);
+                    PeopleViewModel view = service.GetElement(id.Value);
                     textBoxName.Text = view.FIO;
                     comboBoxOwner.Text = view.Owner.ToString();
-                    comboBoxNumberApartment.SelectedValue = view.ApartmentId;
+                  //  comboBoxNumberApartment.SelectedValue = view.NumberApartment;
+                  //  comboBoxNumberHouse.SelectedValue = view.NumberHouse;
                     peoplePrivileges = view.PeoplePrivileges;
                     LoadData();
                 }
@@ -123,7 +121,7 @@ namespace View
                MessageBoxIcon.Error);
                 return;
             }
-           // int count = 0;
+
             int count = 0;
             while (count <= (Convert.ToInt32(dataGridView.RowCount.ToString()) - 1))
             {
@@ -138,7 +136,7 @@ namespace View
             }
             try
             {
-                Privilege view = APIClient.GetRequest<Privilege>("api/Privilege/Get/" + Convert.ToInt32(comboBoxPrivilege.SelectedValue));
+                Privilege view = servicePrivilege.GetElement(Convert.ToInt32(comboBoxPrivilege.SelectedValue));
                 model = new PeoplePrivilegeViewModel
                 {
                     PrivilegeId = Convert.ToInt32(comboBoxPrivilege.SelectedValue),
@@ -212,8 +210,7 @@ namespace View
                 }
                 if (id.HasValue)
                 {
-                    APIClient.PostRequest<People,
-                    bool>("api/People/UpdElement", new People
+                    service.UpdElement(new People
                     {
                         Id = id.Value,
                         FIO = textBoxName.Text,
@@ -224,7 +221,7 @@ namespace View
                 }
                 else
                 {
-                    APIClient.PostRequest<People, bool>("api/People/AddElement", new People
+                    service.AddElement(new People
                     {
                         FIO = textBoxName.Text,
                         Owner = Convert.ToBoolean(comboBoxOwner.Text),
@@ -264,6 +261,22 @@ namespace View
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                    MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void comboBoxNumberHouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Apartment> list = service.GetListA(comboBoxNumberHouse.Text);
+            if (list != null)
+            {
+                //добавить еще один запрос чтобы он выводил квартиры по выбранному дому
+                comboBoxNumberApartment.DisplayMember = "NumberApartment";
+                comboBoxNumberApartment.ValueMember = "Id";
+                comboBoxNumberApartment.DataSource = list;
+                comboBoxNumberApartment.SelectedItem = null;
+
+                //comboBoxNumberApartment.DataSource = list;
+                //comboBoxNumberApartment.SelectedItem = null;
             }
         }
     }

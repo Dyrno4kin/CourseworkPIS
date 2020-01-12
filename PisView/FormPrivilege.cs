@@ -1,22 +1,23 @@
-﻿using Model;
+﻿using Controllers;
+using Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
 
 namespace View
 {
     public partial class FormPrivilege : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
         private int id;
-        public FormPrivilege()
+        private readonly PrivilegeController service;
+        public FormPrivilege(PrivilegeController service)
         {
             InitializeComponent();
+            this.service = service;
         }
 
         private void FormPrivilege_Load(object sender, EventArgs e)
@@ -28,8 +29,7 @@ namespace View
         {
             try
             {
-                List<Privilege> list =
-                APIClient.GetRequest<List<Privilege>>("api/Privilege/GetList");
+                List<Privilege> list = service.GetList();
                 if (list != null)
                 {
                     dataGridView1.DataSource = list;
@@ -66,7 +66,7 @@ namespace View
                MessageBoxIcon.Error);
                 return;
             }
-            APIClient.PostRequest<Privilege, bool>("api/Privilege/AddElement", new Privilege
+            service.AddElement(new Privilege
             {
                 NamePrivilege = textBoxNamePrivilege.Text,
                 TypePrivilege = comboBoxTypePrivilege.Text,
@@ -95,15 +95,13 @@ namespace View
                MessageBoxIcon.Error);
                 return;
             }
-            APIClient.PostRequest<Privilege,
-                    bool>("api/Privilege/UpdElement", new Privilege
-                    {
-                        Id = id,
-                        NamePrivilege = textBoxNamePrivilege.Text,
-                        TypePrivilege = comboBoxTypePrivilege.Text,
-                        Multiplier = Convert.ToDouble(textBoxMultiplier.Text)
-                        
-                    });
+            service.UpdElement(new Privilege
+            {
+                Id = id,
+                NamePrivilege = textBoxNamePrivilege.Text,
+                TypePrivilege = comboBoxTypePrivilege.Text,
+                Multiplier = Convert.ToDouble(textBoxMultiplier.Text)
+            });
             LoadData();
         }
 
@@ -117,8 +115,7 @@ namespace View
                     id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        APIClient.PostRequest<Privilege,
-                        bool>("api/Privilege/DelElement", new Privilege { Id = id });
+                        service.DelElement(id);
                     }
                     catch (Exception ex)
                     {
@@ -137,7 +134,7 @@ namespace View
             {
                 try
                 {
-                    Privilege view = APIClient.GetRequest<Privilege>("api/Privilege/Get/" + id);
+                    Privilege view = service.GetElement(id);
                     textBoxMultiplier.Text = Convert.ToString(view.Multiplier);
                     textBoxNamePrivilege.Text = view.NamePrivilege;
                     comboBoxTypePrivilege.Text = view.TypePrivilege;

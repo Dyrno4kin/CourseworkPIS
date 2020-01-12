@@ -1,13 +1,18 @@
-﻿using Model;
+﻿using Controllers;
+using Model;
 using Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Unity;
 
 namespace View
 {
     public partial class FormPeoplePrivilege : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
         public PeoplePrivilegeViewModel Model
         {
             set { model = value; }
@@ -16,17 +21,19 @@ namespace View
                 return model;
             }
         }
+        private readonly PrivilegeController service;
         private PeoplePrivilegeViewModel model;
-        public FormPeoplePrivilege()
+        public FormPeoplePrivilege(PrivilegeController service)
         {
             InitializeComponent();
+            this.service = service;
         }
 
         private void FormPeoplePrivilege_Load(object sender, EventArgs e)
         {
             try
             {
-                List<Privilege> list = APIClient.GetRequest<List<Privilege>>("api/Privilege/GetList");
+                List<Privilege> list = service.GetList();
                 if (list != null)
                 {
                     comboBoxPrivilege.DisplayMember = "NamePrivilege";
@@ -54,7 +61,7 @@ namespace View
             }
             try
             {
-                Privilege view = APIClient.GetRequest<Privilege>("api/Privilege/Get/" + Convert.ToInt32(comboBoxPrivilege.SelectedValue));
+                Privilege view = service.GetElement(Convert.ToInt32(comboBoxPrivilege.SelectedValue));
                 if (model == null)
                 {
                     model = new PeoplePrivilegeViewModel

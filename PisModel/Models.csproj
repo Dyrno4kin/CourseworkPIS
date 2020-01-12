@@ -42,9 +42,11 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,9 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apartment.cs" />
-    <Compile Include="BindingModels\PeopleBindingModel.cs" />
-    <Compile Include="BindingModels\PeoplePrivilegeBindingModel.cs" />
-    <Compile Include="BindingModels\PrivilegeBindingModel.cs" />
     <Compile Include="Migrations\201912142113036_FristMigration.cs" />
     <Compile Include="Migrations\201912142113036_FristMigration.designer.cs">
       <DependentUpon>201912142113036_FristMigration.cs</DependentUpon>
