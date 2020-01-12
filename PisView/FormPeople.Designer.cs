@@ -214,6 +214,7 @@
             this.comboBoxNumberHouse.Name = "comboBoxNumberHouse";
             this.comboBoxNumberHouse.Size = new System.Drawing.Size(128, 21);
             this.comboBoxNumberHouse.TabIndex = 18;
+            this.comboBoxNumberHouse.SelectedIndexChanged += new System.EventHandler(this.comboBoxNumberHouse_SelectedIndexChanged);
             // 
             // label2
             // 
