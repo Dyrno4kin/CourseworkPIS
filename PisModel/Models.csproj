@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201912161720564_TrirdMigration1.Designer.cs">
       <DependentUpon>201912161720564_TrirdMigration1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001131051361_Migrate3.cs" />
+    <Compile Include="Migrations\202001131051361_Migrate3.Designer.cs">
+      <DependentUpon>202001131051361_Migrate3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="People.cs" />
     <Compile Include="PeoplePrivilege.cs" />
@@ -107,6 +111,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912161720564_TrirdMigration1.resx">
       <DependentUpon>201912161720564_TrirdMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001131051361_Migrate3.resx">
+      <DependentUpon>202001131051361_Migrate3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

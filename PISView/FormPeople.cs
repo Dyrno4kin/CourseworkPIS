@@ -20,9 +20,11 @@ namespace View
         public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
         private int? id;
+        private int idPrivilege;
         private readonly PeopleController service;
         private readonly PrivilegeController servicePrivilege;
         private List<PeoplePrivilegeViewModel> peoplePrivileges;
+
 
         public PeoplePrivilegeViewModel Model
         {
@@ -43,6 +45,8 @@ namespace View
 
         private void FormPeople_Load(object sender, EventArgs e)
         {
+            dateTimePicker1.CustomFormat = "dd.MM.yyyy";
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
             try
             {
 
@@ -71,6 +75,7 @@ namespace View
                     PeopleViewModel view = service.GetElement(id.Value);
                     textBoxName.Text = view.FIO;
                     comboBoxOwner.Text = view.Owner.ToString();
+                    dateTimePicker1.Value = view.Date;
                   //  comboBoxNumberApartment.SelectedValue = view.NumberApartment;
                   //  comboBoxNumberHouse.SelectedValue = view.NumberHouse;
                     peoplePrivileges = view.PeoplePrivileges;
@@ -216,6 +221,7 @@ namespace View
                         FIO = textBoxName.Text,
                         Owner = Convert.ToBoolean(comboBoxOwner.Text),
                         ApartmentId = Convert.ToInt32(comboBoxNumberApartment.SelectedValue),
+                        Date = Convert.ToDateTime(dateTimePicker1.Text),
                         PeoplePrivileges = peoplePrivilegesBM
                     });
                 }
@@ -226,6 +232,7 @@ namespace View
                         FIO = textBoxName.Text,
                         Owner = Convert.ToBoolean(comboBoxOwner.Text),
                         ApartmentId = Convert.ToInt32(comboBoxNumberApartment.SelectedValue),
+                        Date = Convert.ToDateTime(dateTimePicker1.Text),
                         PeoplePrivileges = peoplePrivilegesBM
                     });
                 }
@@ -247,22 +254,6 @@ namespace View
             Close();
         }
 
-        private void dataGridView_MouseClick(object sender, MouseEventArgs e)
-        {
-            id = Convert.ToInt32(dataGridView.CurrentRow.Cells[2].Value);
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                try
-                {
-                    comboBoxPrivilege.SelectedValue = id.Value;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
-                }
-            }
-        }
 
         private void comboBoxNumberHouse_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -274,9 +265,6 @@ namespace View
                 comboBoxNumberApartment.ValueMember = "Id";
                 comboBoxNumberApartment.DataSource = list;
                 comboBoxNumberApartment.SelectedItem = null;
-
-                //comboBoxNumberApartment.DataSource = list;
-                //comboBoxNumberApartment.SelectedItem = null;
             }
         }
     }

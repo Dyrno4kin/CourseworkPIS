@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
@@ -15,6 +16,8 @@ namespace Model
         public bool Owner { get; set; }
         [DataMember]
         public int ApartmentId { get; set; }
+        [DataMember]
+        public DateTime Date { get; set; }
 
         public virtual Apartment Apartment { get; set; }
 

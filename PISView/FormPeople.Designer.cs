@@ -44,6 +44,7 @@
             this.comboBoxOwner = new System.Windows.Forms.ComboBox();
             this.comboBoxNumberHouse = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.groupBoxPrivileges.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -120,7 +121,6 @@
             this.dataGridView.RowTemplate.Height = 24;
             this.dataGridView.Size = new System.Drawing.Size(314, 226);
             this.dataGridView.TabIndex = 4;
-            this.dataGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseClick);
             // 
             // buttonDel
             // 
@@ -226,11 +226,19 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "Номер дома :";
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(300, 11);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 19;
+            // 
             // FormPeople
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 401);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.comboBoxNumberHouse);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxOwner);
@@ -271,5 +279,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxNumberHouse;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

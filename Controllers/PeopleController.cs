@@ -25,6 +25,7 @@ namespace Controllers
                 Owner = rec.Owner,
                 NumberHouse = rec.Apartment.NumberHouse,
                 NumberApartment = rec.Apartment.NumberApartment,
+                Date = rec.Date,
                 PeoplePrivileges = context.PeoplePrivileges
             .Where(recCI => recCI.PeopleId == rec.Id)
            .Select(recCI => new PeoplePrivilegeViewModel
@@ -50,6 +51,7 @@ namespace Controllers
                     FIO = element.FIO,
                     Owner = element.Owner,
                     ApartmentId = element.ApartmentId,
+                    Date = element.Date,
                     PeoplePrivileges = context.PeoplePrivileges
                     .Where(recCI => recCI.PeopleId == element.Id)
                     .Select(recCI => new PeoplePrivilegeViewModel
@@ -85,7 +87,8 @@ namespace Controllers
                     {
                         FIO = model.FIO,
                         Owner = model.Owner,
-                        ApartmentId = model.ApartmentId
+                        ApartmentId = model.ApartmentId,
+                        Date = model.Date
                     };
                     context.Peoples.Add(element);
                     context.SaveChanges();
@@ -126,7 +129,7 @@ namespace Controllers
                    rec.FIO == model.FIO && rec.Id != model.Id);
                     if (element != null)
                     {
-                        //throw new Exception("Уже есть жилец с таким ФИО");
+                        throw new Exception("Уже есть жилец с таким ФИО");
                     }
                     element = context.Peoples.FirstOrDefault(rec => rec.Id == model.Id);
                     if (element == null)
@@ -136,6 +139,7 @@ namespace Controllers
                     element.FIO = model.FIO;
                     element.Owner = model.Owner;
                     element.ApartmentId = model.ApartmentId;
+                    element.Date = model.Date;
                     context.SaveChanges();
                     // обновляем существуюущие компоненты
                     var privIds = model.PeoplePrivileges.AsEnumerable().Select(rec =>

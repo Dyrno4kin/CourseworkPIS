@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.ViewModels
 {
@@ -17,7 +14,9 @@ namespace Model.ViewModels
         public int NumberApartment { get; set; }
         public int CountPeople { get; set; }
         public double AverageLivingSpace { get; set; }
-        
+
+        public DateTime Date { get; set; }
+
 
         public List<PeoplePrivilegeViewModel> PeoplePrivileges { get; set; }
 

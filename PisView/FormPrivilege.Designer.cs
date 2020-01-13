@@ -96,7 +96,7 @@
             this.comboBoxTypePrivilege.FormattingEnabled = true;
             this.comboBoxTypePrivilege.Items.AddRange(new object[] {
             "На газ",
-            "На электричесво",
+            "На электричество",
             "На воду",
             "На общедомовые нужды"});
             this.comboBoxTypePrivilege.Location = new System.Drawing.Point(546, 39);

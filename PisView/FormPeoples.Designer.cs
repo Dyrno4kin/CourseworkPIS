@@ -57,12 +57,12 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowTemplate.Height = 24;
-            this.dataGridView.Size = new System.Drawing.Size(433, 316);
+            this.dataGridView.Size = new System.Drawing.Size(495, 316);
             this.dataGridView.TabIndex = 15;
             // 
             // buttonUpd
             // 
-            this.buttonUpd.Location = new System.Drawing.Point(455, 308);
+            this.buttonUpd.Location = new System.Drawing.Point(511, 308);
             this.buttonUpd.Margin = new System.Windows.Forms.Padding(2);
             this.buttonUpd.Name = "buttonUpd";
             this.buttonUpd.Size = new System.Drawing.Size(112, 36);
@@ -73,7 +73,7 @@
             // 
             // buttonDel
             // 
-            this.buttonDel.Location = new System.Drawing.Point(455, 258);
+            this.buttonDel.Location = new System.Drawing.Point(511, 258);
             this.buttonDel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDel.Name = "buttonDel";
             this.buttonDel.Size = new System.Drawing.Size(112, 36);
@@ -84,7 +84,7 @@
             // 
             // buttonChange
             // 
-            this.buttonChange.Location = new System.Drawing.Point(455, 207);
+            this.buttonChange.Location = new System.Drawing.Point(511, 207);
             this.buttonChange.Margin = new System.Windows.Forms.Padding(2);
             this.buttonChange.Name = "buttonChange";
             this.buttonChange.Size = new System.Drawing.Size(112, 35);
@@ -95,7 +95,7 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(455, 152);
+            this.buttonAdd.Location = new System.Drawing.Point(511, 152);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(112, 35);
@@ -108,12 +108,12 @@
             // 
             this.textBoxSerch.Location = new System.Drawing.Point(12, 7);
             this.textBoxSerch.Name = "textBoxSerch";
-            this.textBoxSerch.Size = new System.Drawing.Size(432, 20);
+            this.textBoxSerch.Size = new System.Drawing.Size(494, 20);
             this.textBoxSerch.TabIndex = 16;
             // 
             // buttonSerchByFIO
             // 
-            this.buttonSerchByFIO.Location = new System.Drawing.Point(455, 7);
+            this.buttonSerchByFIO.Location = new System.Drawing.Point(511, 7);
             this.buttonSerchByFIO.Name = "buttonSerchByFIO";
             this.buttonSerchByFIO.Size = new System.Drawing.Size(180, 20);
             this.buttonSerchByFIO.TabIndex = 17;
@@ -123,7 +123,7 @@
             // 
             // buttonSelectByHouseNumber
             // 
-            this.buttonSelectByHouseNumber.Location = new System.Drawing.Point(455, 33);
+            this.buttonSelectByHouseNumber.Location = new System.Drawing.Point(511, 33);
             this.buttonSelectByHouseNumber.Name = "buttonSelectByHouseNumber";
             this.buttonSelectByHouseNumber.Size = new System.Drawing.Size(180, 20);
             this.buttonSelectByHouseNumber.TabIndex = 18;
@@ -133,7 +133,7 @@
             // 
             // buttonSelectByCountPeople
             // 
-            this.buttonSelectByCountPeople.Location = new System.Drawing.Point(455, 59);
+            this.buttonSelectByCountPeople.Location = new System.Drawing.Point(511, 59);
             this.buttonSelectByCountPeople.Name = "buttonSelectByCountPeople";
             this.buttonSelectByCountPeople.Size = new System.Drawing.Size(180, 36);
             this.buttonSelectByCountPeople.TabIndex = 19;
@@ -143,7 +143,7 @@
             // 
             // buttonAverageLivingSpace
             // 
-            this.buttonAverageLivingSpace.Location = new System.Drawing.Point(455, 101);
+            this.buttonAverageLivingSpace.Location = new System.Drawing.Point(511, 101);
             this.buttonAverageLivingSpace.Name = "buttonAverageLivingSpace";
             this.buttonAverageLivingSpace.Size = new System.Drawing.Size(180, 36);
             this.buttonAverageLivingSpace.TabIndex = 20;
@@ -153,7 +153,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(651, 317);
+            this.button1.Location = new System.Drawing.Point(699, 317);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(180, 36);
             this.button1.TabIndex = 21;
@@ -167,15 +167,14 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(651, 7);
+            this.chart1.Location = new System.Drawing.Point(699, 7);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
             series1.Legend = "Legend1";
             series1.Name = "NumberHouse";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(390, 300);
+            this.chart1.Size = new System.Drawing.Size(395, 300);
             this.chart1.TabIndex = 22;
             this.chart1.Text = "chart1";
             // 
@@ -183,7 +182,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1053, 365);
+            this.ClientSize = new System.Drawing.Size(1106, 365);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonAverageLivingSpace);
