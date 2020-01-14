@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.buttonUpd = new System.Windows.Forms.Button();
             this.buttonDel = new System.Windows.Forms.Button();
@@ -42,9 +39,7 @@
             this.buttonSelectByCountPeople = new System.Windows.Forms.Button();
             this.buttonAverageLivingSpace = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -52,7 +47,7 @@
             this.dataGridView.AllowUserToAddRows = false;
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Location = new System.Drawing.Point(11, 32);
+            this.dataGridView.Location = new System.Drawing.Point(11, 33);
             this.dataGridView.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
@@ -62,10 +57,10 @@
             // 
             // buttonUpd
             // 
-            this.buttonUpd.Location = new System.Drawing.Point(511, 308);
+            this.buttonUpd.Location = new System.Drawing.Point(513, 229);
             this.buttonUpd.Margin = new System.Windows.Forms.Padding(2);
             this.buttonUpd.Name = "buttonUpd";
-            this.buttonUpd.Size = new System.Drawing.Size(112, 36);
+            this.buttonUpd.Size = new System.Drawing.Size(179, 25);
             this.buttonUpd.TabIndex = 14;
             this.buttonUpd.Text = "Обновить";
             this.buttonUpd.UseVisualStyleBackColor = true;
@@ -73,10 +68,10 @@
             // 
             // buttonDel
             // 
-            this.buttonDel.Location = new System.Drawing.Point(511, 258);
+            this.buttonDel.Location = new System.Drawing.Point(512, 200);
             this.buttonDel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDel.Name = "buttonDel";
-            this.buttonDel.Size = new System.Drawing.Size(112, 36);
+            this.buttonDel.Size = new System.Drawing.Size(180, 25);
             this.buttonDel.TabIndex = 13;
             this.buttonDel.Text = "Удалить";
             this.buttonDel.UseVisualStyleBackColor = true;
@@ -84,10 +79,10 @@
             // 
             // buttonChange
             // 
-            this.buttonChange.Location = new System.Drawing.Point(511, 207);
+            this.buttonChange.Location = new System.Drawing.Point(512, 171);
             this.buttonChange.Margin = new System.Windows.Forms.Padding(2);
             this.buttonChange.Name = "buttonChange";
-            this.buttonChange.Size = new System.Drawing.Size(112, 35);
+            this.buttonChange.Size = new System.Drawing.Size(180, 25);
             this.buttonChange.TabIndex = 12;
             this.buttonChange.Text = "Изменить";
             this.buttonChange.UseVisualStyleBackColor = true;
@@ -95,10 +90,10 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(511, 152);
+            this.buttonAdd.Location = new System.Drawing.Point(511, 142);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(112, 35);
+            this.buttonAdd.Size = new System.Drawing.Size(181, 25);
             this.buttonAdd.TabIndex = 11;
             this.buttonAdd.Text = "Добавить";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -153,37 +148,20 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(699, 317);
+            this.button1.Location = new System.Drawing.Point(512, 301);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(180, 36);
+            this.button1.Size = new System.Drawing.Size(179, 25);
             this.button1.TabIndex = 21;
-            this.button1.Text = "Диаграмма распределения жильцов по квартирам";
+            this.button1.Text = "Обновить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // chart1
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(699, 7);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "NumberHouse";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(395, 300);
-            this.chart1.TabIndex = 22;
-            this.chart1.Text = "chart1";
             // 
             // FormPeoples
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1106, 365);
-            this.Controls.Add(this.chart1);
+            this.ClientSize = new System.Drawing.Size(702, 365);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonAverageLivingSpace);
             this.Controls.Add(this.buttonSelectByCountPeople);
@@ -199,7 +177,6 @@
             this.Text = "Список жильцов";
             this.Load += new System.EventHandler(this.FormPeoples_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,6 +195,5 @@
         private System.Windows.Forms.Button buttonSelectByCountPeople;
         private System.Windows.Forms.Button buttonAverageLivingSpace;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

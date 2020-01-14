@@ -19,7 +19,7 @@ namespace View
             var container = BuildUnityContainer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(container.Resolve<FormMain>());
+            Application.Run(container.Resolve<FormStart>());
         }
 
         public static IUnityContainer BuildUnityContainer()
@@ -30,6 +30,12 @@ namespace View
             currentContainer.RegisterType<PeopleController>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<PrivilegeController>(new
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<BackupController>(new
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportController>(new
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<MainController>(new
            HierarchicalLifetimeManager());
 
             return currentContainer;

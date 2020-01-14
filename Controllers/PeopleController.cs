@@ -52,6 +52,8 @@ namespace Controllers
                     Owner = element.Owner,
                     ApartmentId = element.ApartmentId,
                     Date = element.Date,
+                    NumberHouse = context.Apartments.FirstOrDefault(rec => rec.Id == element.ApartmentId).NumberHouse,
+                    NumberApartment = context.Apartments.FirstOrDefault(rec => rec.Id == element.ApartmentId).NumberApartment,
                     PeoplePrivileges = context.PeoplePrivileges
                     .Where(recCI => recCI.PeopleId == element.Id)
                     .Select(recCI => new PeoplePrivilegeViewModel
@@ -80,7 +82,7 @@ namespace Controllers
                     {
                         throw new Exception("Уже есть жилец с таким ФИО");
                     }
-                    
+
 
 
                     element = new People
@@ -223,7 +225,7 @@ namespace Controllers
             }
         }
 
-        public List<Apartment> GetListA(string HouseNumber)
+        public List<Apartment> GetListApartment(string HouseNumber)
         {
             List<Apartment> result = context.Apartments.AsEnumerable().Where(rec => rec.NumberHouse == HouseNumber).Select(rec => new Apartment
             {
@@ -236,7 +238,7 @@ namespace Controllers
             return result;
         }
 
-         // Поиск по фамилии или номеру квартиры
+        // Поиск по фамилии или номеру квартиры
         public List<PeopleViewModel> SearchByFIO(string Fio)
         {
             int NumberApart = -1;
@@ -245,7 +247,7 @@ namespace Controllers
             if (isNum)
             {
                 NumberApart = Convert.ToInt32(Fio);
-            }          
+            }
             List<PeopleViewModel> result = context.Peoples.Where(rec => rec.FIO.StartsWith(Fio) || rec.Apartment.NumberApartment == NumberApart).Select(rec => new
            PeopleViewModel
             {
@@ -254,15 +256,7 @@ namespace Controllers
                 Owner = rec.Owner,
                 NumberHouse = rec.Apartment.NumberHouse,
                 NumberApartment = rec.Apartment.NumberApartment,
-                PeoplePrivileges = context.PeoplePrivileges
-            .Where(recCI => recCI.PeopleId == rec.Id)
-           .Select(recCI => new PeoplePrivilegeViewModel
-           {
-               Id = recCI.Id,
-               PeopleId = recCI.PeopleId,
-               PrivilegeId = recCI.PrivilegeId
-           })
-           .ToList()
+                Date = rec.Date
             })
             .ToList();
             return result;
@@ -278,7 +272,8 @@ namespace Controllers
                 FIO = rec.FIO,
                 Owner = rec.Owner,
                 NumberHouse = rec.Apartment.NumberHouse,
-                NumberApartment = rec.Apartment.NumberApartment
+                NumberApartment = rec.Apartment.NumberApartment,
+                Date = rec.Date
             })
             .ToList();
             return result;
@@ -287,31 +282,36 @@ namespace Controllers
         //Квартиры в которых количество жильцов больше заданного кол-ва
         public List<PeopleViewModel> SelectByCountPeople(int CountPeople)
         {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=PisDatabase;Integrated Security=True";
-            var dc = new DbContext(connectionString);
-            var dt = dc.Database.SqlQuery<PeopleViewModel>("select Apartments.NumberHouse, Apartments.NumberApartment, Count(ApartmentId) as 'CountPeople' from People, Apartments where People.ApartmentId = Apartments.Id Group by Apartments.NumberHouse, Apartments.NumberApartment Having Count(ApartmentId) > "+CountPeople+"");
-            List<PeopleViewModel> result = dt.ToList();
-            return result;
-        }
-        
-        //Расчет жилплощади на одного человека в каждой квартире
-        public List<PeopleViewModel> SelectAverageLivingSpace()
-        {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=PisDatabase;Integrated Security=True";
-            var dc = new DbContext(connectionString);
-            var dt = dc.Database.SqlQuery<PeopleViewModel>("select Apartments.NumberHouse, Apartments.NumberApartment, Apartments.ApartmentSize/Count(ApartmentId) as 'AverageLivingSpace'  from People, Apartments where People.ApartmentId = Apartments.Id Group by Apartments.NumberHouse, Apartments.NumberApartment, Apartments.ApartmentSize");
+            var dt = context.Database.SqlQuery<PeopleViewModel>("select Apartments.NumberHouse, Apartments.NumberApartment, Count(ApartmentId) as 'CountPeople' from People, Apartments where People.ApartmentId = Apartments.Id Group by Apartments.NumberHouse, Apartments.NumberApartment Having Count(ApartmentId) > " + CountPeople + "");
             List<PeopleViewModel> result = dt.ToList();
             return result;
         }
 
-        //Количество жильцов в каждой квартире
-        public List<PeopleViewModel> SelectCountPeopleInApart()
+        //Расчет жилплощади на одного человека в каждой квартире
+        public List<PeopleViewModel> SelectAverageLivingSpace()
         {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=PisDatabase;Integrated Security=True";
-            var dc = new DbContext(connectionString);
-            var dt = dc.Database.SqlQuery<PeopleViewModel>("select Concat(Apartments.NumberHouse, ' кв ', Apartments.NumberApartment) as 'NumberHouse', Count(ApartmentId) as 'CountPeople' from People, Apartments where People.ApartmentId = Apartments.Id Group by Apartments.NumberHouse, Apartments.NumberApartment");
+            var dt = context.Database.SqlQuery<PeopleViewModel>("select Apartments.NumberHouse, Apartments.NumberApartment, Apartments.ApartmentSize/Count(ApartmentId) as 'AverageLivingSpace'  from People, Apartments where People.ApartmentId = Apartments.Id Group by Apartments.NumberHouse, Apartments.NumberApartment, Apartments.ApartmentSize");
             List<PeopleViewModel> result = dt.ToList();
             return result;
+        }
+
+   
+        public void TradeApartment(int apart1, int apart2)
+        {
+            var updateAparts = context.Peoples.Where(rec =>
+                   rec.ApartmentId == apart1);
+            foreach (var updateApart in updateAparts)
+            {
+                updateApart.ApartmentId = apart2;
+            }
+
+            var updateApartments = context.Peoples.Where(rec =>
+                   rec.ApartmentId == apart2);
+            foreach (var updateApartment in updateApartments)
+            {
+                updateApartment.ApartmentId = apart1;
+            }
+            context.SaveChanges();
         }
     }
 }

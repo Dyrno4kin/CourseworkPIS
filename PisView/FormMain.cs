@@ -8,6 +8,7 @@ namespace View
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
+        public string fio { get; set; }
 
         public FormMain()
         {
@@ -28,7 +29,8 @@ namespace View
 
         private void buttonReport_Click(object sender, EventArgs e)
         {
-            var form = new FormReport();
+            var form = Container.Resolve<FormReport>();
+            form.fio = fio;
             form.ShowDialog();
         }
 
@@ -54,6 +56,12 @@ namespace View
             form2.Left = 1200;
             form2.Top = 200;
             form2.Show();
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            MessageBox.Show("Добрый день, "+fio+"", "Сообщение",
+               MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -19,13 +19,13 @@ namespace View
         [Dependency]
         public new IUnityContainer Container { get; set; }
         private readonly PeopleController service;
-        private readonly ReportController reportService;
+        private readonly BackupController backupService;
 
-        public FormPeoples(PeopleController service, ReportController reportService)
+        public FormPeoples(PeopleController service, BackupController backupService)
         {
             InitializeComponent();
             this.service = service;
-            this.reportService = reportService;
+            this.backupService = backupService;
         }
 
         private void FormPeoples_Load(object sender, EventArgs e)
@@ -47,6 +47,7 @@ namespace View
                     dataGridView.Columns[3].Visible = false;
                     dataGridView.Columns[6].Visible = false;
                     dataGridView.Columns[7].Visible = false;
+                    dataGridView.Columns[8].Visible = true;
                     dataGridView.Columns[1].AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.Fill;
                 }
@@ -91,7 +92,7 @@ namespace View
                    Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        reportService.SaveToJsonAsync("D:\\BackupDeleteClient" + id +".json");
+                        backupService.SaveToJsonAsync("D:\\BackupDeleteClient" + id +".json");
                         MessageBox.Show("Данные скопированы в архив", "Успех", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                         service.DelElement(id);
@@ -127,6 +128,7 @@ namespace View
                     dataGridView.Columns[3].Visible = false;
                     dataGridView.Columns[6].Visible = false;
                     dataGridView.Columns[7].Visible = false;
+                    dataGridView.Columns[8].Visible = true;
                     dataGridView.Columns[1].AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.Fill;
                 }
@@ -152,6 +154,7 @@ namespace View
                     dataGridView.Columns[3].Visible = false;
                     dataGridView.Columns[6].Visible = false;
                     dataGridView.Columns[7].Visible = false;
+                    dataGridView.Columns[8].Visible = true;
                     dataGridView.Columns[1].AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.Fill;
                 }
@@ -177,6 +180,7 @@ namespace View
                     dataGridView.Columns[3].Visible = false;
                     dataGridView.Columns[6].Visible = true;
                     dataGridView.Columns[7].Visible = false;
+                    dataGridView.Columns[8].Visible = false;
                     dataGridView.Columns[1].AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.Fill;
                     dataGridView.Columns[6].AutoSizeMode =
@@ -204,6 +208,7 @@ namespace View
                     dataGridView.Columns[3].Visible = false;
                     dataGridView.Columns[6].Visible = false;
                     dataGridView.Columns[7].Visible = true;
+                    dataGridView.Columns[8].Visible = false;
                     dataGridView.Columns[1].AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.Fill;
                     dataGridView.Columns[6].AutoSizeMode =
@@ -217,16 +222,9 @@ namespace View
             }
         }
 
-       
-
         private void button1_Click(object sender, EventArgs e)
         {
-            chart1.Series["NumberHouse"].XValueMember = "NumberHouse";
-            chart1.Series["NumberHouse"].YValueMembers = "CountPeople";
-            chart1.DataSource = service.SelectCountPeopleInApart();
-            chart1.DataBind();
-
+            service.Trade(5, 6);
         }
-
     }
 }
