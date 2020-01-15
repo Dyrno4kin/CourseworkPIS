@@ -1,15 +1,20 @@
 ﻿using Controllers;
 using Model;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
+using View;
 
-namespace View
+namespace ViewAuthorization
 {
     static class Program
     {
+
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -19,7 +24,7 @@ namespace View
             var container = BuildUnityContainer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(container.Resolve<FormMain>());
+            Application.Run(container.Resolve<FormStart>());
         }
 
         public static IUnityContainer BuildUnityContainer()

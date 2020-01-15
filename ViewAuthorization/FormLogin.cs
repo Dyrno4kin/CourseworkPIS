@@ -1,17 +1,11 @@
-﻿using Model;
-using Controllers;
+﻿using Controllers;
+using Model;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
+using View;
 
-namespace View
+namespace ViewAuthorization
 {
     public partial class FormLogin : Form
     {
@@ -45,6 +39,9 @@ namespace View
 
                     if (view.UserRole == "Пасспортист")
                     {
+                        this.Visible = false;
+                        FormStart formStart = new FormStart();
+                        formStart.Dispose();
                         var form = Container.Resolve<FormMain>();
                         form.fio = view.UserFIO;
                         form.ShowDialog();

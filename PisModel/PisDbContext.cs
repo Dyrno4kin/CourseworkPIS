@@ -17,5 +17,8 @@ namespace Model
         public DbSet<PeoplePrivilege> PeoplePrivileges { set; get; }
         public DbSet<Privilege> Privileges { set; get; }
         public DbSet<User> Users { set; get; }
+        public DbSet<Tarif> Tarifs { set; get; }
+        public DbSet<СonsumedService> ConsumedServices { set; get; }
+        public DbSet<ReceiptsForPayment> ReceiptsForPayments { set; get; }
     }
 }

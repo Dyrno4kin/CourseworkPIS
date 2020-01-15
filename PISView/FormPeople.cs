@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Controllers;
 using Model;
@@ -20,7 +15,6 @@ namespace View
         public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
         private int? id;
-        private int idPrivilege;
         private readonly PeopleController service;
         private readonly PrivilegeController servicePrivilege;
         private List<PeoplePrivilegeViewModel> peoplePrivileges;
@@ -49,9 +43,6 @@ namespace View
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             try
             {
-
-                
-
                 List<Privilege> listPrivilege = servicePrivilege.GetList();
                 if (listPrivilege != null)
                 {
@@ -69,15 +60,21 @@ namespace View
 
             if (id.HasValue)
             {
-
                 try
                 {
                     PeopleViewModel view = service.GetElement(id.Value);
                     textBoxName.Text = view.FIO;
                     comboBoxOwner.Text = view.Owner.ToString();
                     dateTimePicker1.Value = view.Date;
-                  //  comboBoxNumberApartment.SelectedValue = view.NumberApartment;
-                  //  comboBoxNumberHouse.SelectedValue = view.NumberHouse;
+                    comboBoxNumberHouse.Text = view.NumberHouse;
+                    List<Apartment> list = service.GetListApartment(comboBoxNumberHouse.Text);
+                    if (list != null)
+                    {
+                        comboBoxNumberApartment.DisplayMember = "NumberApartment";
+                        comboBoxNumberApartment.ValueMember = "Id";
+                        comboBoxNumberApartment.DataSource = list;
+                        comboBoxNumberApartment.SelectedItem = view.NumberApartment;
+                    }
                     peoplePrivileges = view.PeoplePrivileges;
                     LoadData();
                 }
@@ -90,9 +87,7 @@ namespace View
             else
             {
                 peoplePrivileges = new List<PeoplePrivilegeViewModel>();
-            }
-
-           
+            }       
         }
 
         private void LoadData()
@@ -135,8 +130,7 @@ namespace View
                     MessageBox.Show("У клиента уже есть такая льгота", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                }
-                    
+                }               
                 count++;
             }
             try
@@ -254,13 +248,11 @@ namespace View
             Close();
         }
 
-
-        private void comboBoxNumberHouse_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxNumberHouse_SelectedValueChanged(object sender, EventArgs e)
         {
-            List<Apartment> list = service.GetListA(comboBoxNumberHouse.Text);
+            List<Apartment> list = service.GetListApartment(comboBoxNumberHouse.Text);
             if (list != null)
             {
-                //добавить еще один запрос чтобы он выводил квартиры по выбранному дому
                 comboBoxNumberApartment.DisplayMember = "NumberApartment";
                 comboBoxNumberApartment.ValueMember = "Id";
                 comboBoxNumberApartment.DataSource = list;

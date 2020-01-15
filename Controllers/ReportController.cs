@@ -46,131 +46,152 @@ namespace Controllers
         }
 
 
-        public void savePDF(string FileName, string title, DataGridView dataGridView1, string Itogo, string UserFIO)
+        public void savePDF(string title, DataGridView dataGridView1, string Itogo, string UserFIO)
         {
-            int countColumn = 0;
-            string FONT_LOCATION = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.TTF"); //определяем В СИСТЕМЕ(чтобы не копировать файл) расположение шрифта arial.ttf
-            BaseFont baseFont = BaseFont.CreateFont(FONT_LOCATION, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED); //создаем шрифт
-            iTextSharp.text.Font fontParagraph = new iTextSharp.text.Font(baseFont, 17, iTextSharp.text.Font.NORMAL); //регистрируем + можно задать параметры для него(17 - размер, последний параметр - стиль)
-
-            var phraseTitle = new Phrase(title,
-            new iTextSharp.text.Font(baseFont, 18, iTextSharp.text.Font.BOLD));
-            iTextSharp.text.Paragraph paragraph = new
-           iTextSharp.text.Paragraph(phraseTitle)
+            if (MessageBox.Show("Напечатать отчет?", "Вопрос", MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Alignment = Element.ALIGN_CENTER,
-                SpacingAfter = 12
-            };
-
-            for (int i = 0; i < dataGridView1.Columns.Count; i++)
-            {
-                if (dataGridView1.Columns[i].Visible == true) countColumn++;
-            }
-
-            PdfPTable table = new PdfPTable(countColumn);
-
-            for (int i = 0; i < dataGridView1.Columns.Count; i++)
-            {
-                if (dataGridView1.Columns[i].Visible == true)
+                SaveFileDialog sfd = new SaveFileDialog
                 {
-                    table.AddCell(new Phrase(dataGridView1.Columns[i].HeaderCell.Value.ToString(), fontParagraph));
-                    countColumn++;
-                }
-            }
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                    Filter = "pdf|*.pdf"
+                };
+                if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    if (dataGridView1.Columns[j].Visible == true)
+                    int countColumn = 0;
+                    string FONT_LOCATION = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.TTF"); //определяем В СИСТЕМЕ(чтобы не копировать файл) расположение шрифта arial.ttf
+                    BaseFont baseFont = BaseFont.CreateFont(FONT_LOCATION, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED); //создаем шрифт
+                    iTextSharp.text.Font fontParagraph = new iTextSharp.text.Font(baseFont, 17, iTextSharp.text.Font.NORMAL); //регистрируем + можно задать параметры для него(17 - размер, последний параметр - стиль)
+
+                    var phraseTitle = new Phrase(title,
+                    new iTextSharp.text.Font(baseFont, 18, iTextSharp.text.Font.BOLD));
+                    iTextSharp.text.Paragraph paragraph = new
+                   iTextSharp.text.Paragraph(phraseTitle)
                     {
-                        table.AddCell(new Phrase(dataGridView1.Rows[i].Cells[j].Value.ToString(), fontParagraph));
+                        Alignment = Element.ALIGN_CENTER,
+                        SpacingAfter = 12
+                    };
+
+                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    {
+                        if (dataGridView1.Columns[i].Visible == true) countColumn++;
+                    }
+
+                    PdfPTable table = new PdfPTable(countColumn);
+
+                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    {
+                        if (dataGridView1.Columns[i].Visible == true)
+                        {
+                            table.AddCell(new Phrase(dataGridView1.Columns[i].HeaderCell.Value.ToString(), fontParagraph));
+                            countColumn++;
+                        }
+                    }
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                        {
+                            if (dataGridView1.Columns[j].Visible == true)
+                            {
+                                table.AddCell(new Phrase(dataGridView1.Rows[i].Cells[j].Value.ToString(), fontParagraph));
+                            }
+                        }
+                    }
+
+                    var phraseSum = new Phrase(Itogo,
+                    new iTextSharp.text.Font(baseFont, 16, iTextSharp.text.Font.BOLD));
+                    iTextSharp.text.Paragraph paragraphSum = new
+                   iTextSharp.text.Paragraph(phraseSum)
+                    {
+                        Alignment = Element.ALIGN_RIGHT - 1,
+                        SpacingAfter = 12,
+                    };
+
+                    var phraseUser = new Phrase("Заверил пасспортист: " + UserFIO + " Роспись:          от " + DateTime.Now + "",
+                    new iTextSharp.text.Font(baseFont, 16, iTextSharp.text.Font.BOLD));
+                    iTextSharp.text.Paragraph paragraphUser = new
+                   iTextSharp.text.Paragraph(phraseUser)
+                    {
+                        Alignment = Element.ALIGN_RIGHT - 1,
+                        SpacingAfter = 12,
+                    };
+
+                    using (FileStream stream = new FileStream(sfd.FileName, FileMode.Create))
+                    {
+                        iTextSharp.text.Document pdfDoc = new Document();
+                        PdfWriter.GetInstance(pdfDoc, stream);
+                        pdfDoc.Open();
+                        pdfDoc.Add(paragraph);
+                        pdfDoc.Add(table);
+                        pdfDoc.Add(paragraphSum);
+                        pdfDoc.Add(paragraphUser);
+                        pdfDoc.Close();
+                        stream.Close();
                     }
                 }
-            }
-
-            var phraseSum = new Phrase(Itogo,
-            new iTextSharp.text.Font(baseFont, 16, iTextSharp.text.Font.BOLD));
-            iTextSharp.text.Paragraph paragraphSum = new
-           iTextSharp.text.Paragraph(phraseSum)
-            {
-                Alignment = Element.ALIGN_RIGHT - 1,
-                SpacingAfter = 12,
-            };
-
-            var phraseUser = new Phrase("Заверил пасспортист: " + UserFIO + " Роспись:          от " + DateTime.Now + "",
-            new iTextSharp.text.Font(baseFont, 16, iTextSharp.text.Font.BOLD));
-            iTextSharp.text.Paragraph paragraphUser = new
-           iTextSharp.text.Paragraph(phraseUser)
-            {
-                Alignment = Element.ALIGN_RIGHT - 1,
-                SpacingAfter = 12,
-            };
-
-            using (FileStream stream = new FileStream(FileName, FileMode.Create))
-            {
-                iTextSharp.text.Document pdfDoc = new Document();
-                PdfWriter.GetInstance(pdfDoc, stream);
-                pdfDoc.Open();
-                pdfDoc.Add(paragraph);
-                pdfDoc.Add(table);
-                pdfDoc.Add(paragraphSum);
-                pdfDoc.Add(paragraphUser);
-                pdfDoc.Close();
-                stream.Close();
             }
         }
 
-        public void saveDiagramm(string FileName, string title, Chart chart, string UserFIO)
+        public void saveDiagramm(string title, Chart chart, string UserFIO)
         {
-            try
+            if (MessageBox.Show("Напечатать отчет?", "Вопрос", MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string FONT_LOCATION = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.TTF"); //определяем В СИСТЕМЕ(чтобы не копировать файл) расположение шрифта arial.ttf
-                BaseFont baseFont = BaseFont.CreateFont(FONT_LOCATION, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED); //создаем шрифт
-                iTextSharp.text.Font fontParagraph = new iTextSharp.text.Font(baseFont, 17, iTextSharp.text.Font.NORMAL); //регистрируем + можно задать параметры для него(17 - размер, последний параметр - стиль)
-
-                var phraseTitle = new Phrase(title,
-                new iTextSharp.text.Font(baseFont, 18, iTextSharp.text.Font.BOLD));
-                iTextSharp.text.Paragraph paragraph = new
-               iTextSharp.text.Paragraph(phraseTitle)
+                SaveFileDialog sfd = new SaveFileDialog
                 {
-                    Alignment = Element.ALIGN_CENTER,
-                    SpacingAfter = 12
+                    Filter = "pdf|*.pdf"
                 };
-
-                chart.SaveImage(FileName + ".png", System.Drawing.Imaging.ImageFormat.Png);
-
-                var phraseUser = new Phrase("Заверил пасспортист: " + UserFIO + " Роспись:          от " + DateTime.Now + "",
-            new iTextSharp.text.Font(baseFont, 16, iTextSharp.text.Font.BOLD));
-                iTextSharp.text.Paragraph paragraphUser = new
-               iTextSharp.text.Paragraph(phraseUser)
+                if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    Alignment = Element.ALIGN_RIGHT - 2,
-                    SpacingAfter = 12,
-                };
-
-                Document document = new Document();
-                Stream myStream;
-                using (var stream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.None))
-
-                {
-                    PdfWriter.GetInstance(document, stream);
-                    document.Open();
-                    using (var imageStream = new FileStream(FileName + ".png", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    try
                     {
-                        var image = Image.GetInstance(imageStream);
-                        document.Add(paragraph);
-                        document.Add(image);
-                        document.Add(paragraphUser);
+                        string FONT_LOCATION = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.TTF"); //определяем В СИСТЕМЕ(чтобы не копировать файл) расположение шрифта arial.ttf
+                        BaseFont baseFont = BaseFont.CreateFont(FONT_LOCATION, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED); //создаем шрифт
+                        iTextSharp.text.Font fontParagraph = new iTextSharp.text.Font(baseFont, 17, iTextSharp.text.Font.NORMAL); //регистрируем + можно задать параметры для него(17 - размер, последний параметр - стиль)
+
+                        var phraseTitle = new Phrase(title,
+                        new iTextSharp.text.Font(baseFont, 18, iTextSharp.text.Font.BOLD));
+                        iTextSharp.text.Paragraph paragraph = new
+                       iTextSharp.text.Paragraph(phraseTitle)
+                        {
+                            Alignment = Element.ALIGN_CENTER,
+                            SpacingAfter = 12
+                        };
+
+                        chart.SaveImage(sfd.FileName + ".png", System.Drawing.Imaging.ImageFormat.Png);
+
+                        var phraseUser = new Phrase("Заверил пасспортист: " + UserFIO + " Роспись:          от " + DateTime.Now + "",
+                    new iTextSharp.text.Font(baseFont, 16, iTextSharp.text.Font.BOLD));
+                        iTextSharp.text.Paragraph paragraphUser = new
+                       iTextSharp.text.Paragraph(phraseUser)
+                        {
+                            Alignment = Element.ALIGN_RIGHT - 2,
+                            SpacingAfter = 12,
+                        };
+
+                        Document document = new Document();
+                        Stream myStream;
+                        using (var stream = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
+
+                        {
+                            PdfWriter.GetInstance(document, stream);
+                            document.Open();
+                            using (var imageStream = new FileStream(sfd.FileName + ".png", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                            {
+                                var image = Image.GetInstance(imageStream);
+                                document.Add(paragraph);
+                                document.Add(image);
+                                document.Add(paragraphUser);
+                            }
+                            document.Close();
+                            File.Delete(sfd.FileName + ".png");
+                        }
                     }
-                    document.Close();
-                    File.Delete(FileName + ".png");
+                    catch
+                    {
+                        MessageBox.Show("ERROR");
+                    }
                 }
-            }
-            catch
-            {
-                MessageBox.Show("ERROR");
             }
         }
     }
-    
 }

@@ -118,7 +118,7 @@ namespace View
         {
             try
             {
-                List<PeopleViewModel> list = service.SearchByFIO(textBoxSerch.Text);
+                List<PeopleViewModel> list = service.Search(textBoxSerch.Text);
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -222,9 +222,34 @@ namespace View
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonTradeApartment_Click(object sender, EventArgs e)
         {
-            service.Trade(5, 6);
+            service.TradeApartment(Convert.ToInt32(comboBoxNumberApartment1.SelectedValue), Convert.ToInt32(comboBoxNumberApartment2.SelectedValue));
+            LoadData();
+        }
+
+        private void comboBoxNumberHouse1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            List<Apartment> list = service.GetListApartment(comboBoxNumberHouse1.Text);
+            if (list != null)
+            {
+                comboBoxNumberApartment1.DisplayMember = "NumberApartment";
+                comboBoxNumberApartment1.ValueMember = "Id";
+                comboBoxNumberApartment1.DataSource = list;
+                comboBoxNumberApartment1.SelectedItem = null;
+            }
+        }
+
+        private void comboBoxNumberHouse2_SelectedValueChanged(object sender, EventArgs e)
+        {
+            List<Apartment> list = service.GetListApartment(comboBoxNumberHouse2.Text);
+            if (list != null)
+            {
+                comboBoxNumberApartment2.DisplayMember = "NumberApartment";
+                comboBoxNumberApartment2.ValueMember = "Id";
+                comboBoxNumberApartment2.DataSource = list;
+                comboBoxNumberApartment2.SelectedItem = null;
+            }
         }
     }
 }

@@ -17,5 +17,10 @@ namespace Model
 
         [ForeignKey("ApartmentId")]
         public virtual List<People> Peoples{ get; set; }
+
+        [ForeignKey("ApartmentId")]
+        public virtual List<СonsumedService> СonsumedServices { get; set; }
+
+        public virtual ReceiptsForPayment ReceiptsForPayment { get; set; }
     }
 }

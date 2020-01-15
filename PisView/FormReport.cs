@@ -63,34 +63,23 @@ namespace View
             }
             label2.Text = "Всего льгот: " + Convert.ToString(sum);
 
-            if (MessageBox.Show("Напечатать отчет?", "Вопрос", MessageBoxButtons.YesNo,
-               MessageBoxIcon.Question) == DialogResult.Yes)
+            string title = "Распределение льготников по квартирам и видам льгот с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
+            if (dateTimePicker1.Value >= dateTimePicker2.Value)
             {
-                string title = "Распределение льготников по квартирам и видам льгот с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
-                if (dateTimePicker1.Value >= dateTimePicker2.Value)
-                {
-                    MessageBox.Show("Дата начала должна быть меньше даты окончания",
-                   "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                SaveFileDialog sfd = new SaveFileDialog
-                {
-                    Filter = "pdf|*.pdf"
-                };
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        reportService.savePDF(sfd.FileName, title, dataGridView, label2.Text, fio);
-                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
-                    }
-                }
+                MessageBox.Show("Дата начала должна быть меньше даты окончания",
+               "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                reportService.savePDF(title, dataGridView, label2.Text, fio);
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
             }
         }
 
@@ -103,34 +92,23 @@ namespace View
             chart1.DataSource = reportService.SelectCountPeopleInApart(dateFrom, dateTo, textBox1.Text);
             chart1.DataBind();
 
-            if (MessageBox.Show("Напечатать отчет?", "Вопрос", MessageBoxButtons.YesNo,
-               MessageBoxIcon.Question) == DialogResult.Yes)
+            string title = "Диаграмма количества жильцов в каждой квартире с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
+            if (dateTimePicker1.Value >= dateTimePicker2.Value)
             {
-                string title = "Диаграмма количества жильцов в каждой квартире с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
-                if (dateTimePicker1.Value >= dateTimePicker2.Value)
-                {
-                    MessageBox.Show("Дата начала должна быть меньше даты окончания",
-                   "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                SaveFileDialog sfd = new SaveFileDialog
-                {
-                    Filter = "pdf|*.pdf"
-                };
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        reportService.saveDiagramm(sfd.FileName, title, chart1, fio);
-                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
-                    }
-                }
+                MessageBox.Show("Дата начала должна быть меньше даты окончания",
+               "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                reportService.saveDiagramm(title, chart1, fio);
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
             }
         }
 
@@ -175,34 +153,23 @@ namespace View
             }
             label2.Text = "Всего жильцов: " + Convert.ToString(sum);
 
-            if (MessageBox.Show("Напечатать отчет?", "Вопрос", MessageBoxButtons.YesNo,
-               MessageBoxIcon.Question) == DialogResult.Yes)
+            string title = "Поквартирный список с расчетом количества жильцов в каждой квартире с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
+            if (dateTimePicker1.Value >= dateTimePicker2.Value)
             {
-                string title = "Поквартирный список с расчетом количества жильцов в каждой квартире с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
-                if (dateTimePicker1.Value >= dateTimePicker2.Value)
-                {
-                    MessageBox.Show("Дата начала должна быть меньше даты окончания",
-                   "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                SaveFileDialog sfd = new SaveFileDialog
-                {
-                    Filter = "pdf|*.pdf"
-                };
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        reportService.savePDF(sfd.FileName, title, dataGridView, label2.Text, fio);
-                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
-                    }
-                }
+                MessageBox.Show("Дата начала должна быть меньше даты окончания",
+               "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                reportService.savePDF(title, dataGridView, label2.Text, fio);
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
             }
         }
 
@@ -237,41 +204,24 @@ namespace View
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
             }
-            int count = 0;
-            while (count <= (Convert.ToInt32(dataGridView.RowCount.ToString()) - 1))
+            label2.Text = "Членов семьи: " + Convert.ToString(dataGridView.RowCount.ToString());
+            string title = "Справка о составе семьи жильца " + textBox1.Text + " с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
+            if (dateTimePicker1.Value >= dateTimePicker2.Value)
             {
-                count++;
+                MessageBox.Show("Дата начала должна быть меньше даты окончания",
+               "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            label2.Text = "Членов семьи: " + Convert.ToString(count);
-
-            if (MessageBox.Show("Напечатать отчет?", "Вопрос", MessageBoxButtons.YesNo,
-               MessageBoxIcon.Question) == DialogResult.Yes)
+            try
             {
-                string title = "Справка о составе семьи жильца " + textBox1.Text + " с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
-                if (dateTimePicker1.Value >= dateTimePicker2.Value)
-                {
-                    MessageBox.Show("Дата начала должна быть меньше даты окончания",
-                   "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                SaveFileDialog sfd = new SaveFileDialog
-                {
-                    Filter = "pdf|*.pdf"
-                };
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        reportService.savePDF(sfd.FileName, title, dataGridView, label2.Text, fio);
-                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
-                    }
-                }
+                reportService.savePDF(title, dataGridView, label2.Text, fio);
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
             }
         }
     }

@@ -66,12 +66,20 @@ namespace View
                MessageBoxIcon.Error);
                 return;
             }
-            service.AddElement(new Privilege
+            try
             {
-                NamePrivilege = textBoxNamePrivilege.Text,
-                TypePrivilege = comboBoxTypePrivilege.Text,
-                Multiplier = Convert.ToDouble(textBoxMultiplier.Text)
-            });
+                service.AddElement(new Privilege
+                {
+                    NamePrivilege = textBoxNamePrivilege.Text,
+                    TypePrivilege = comboBoxTypePrivilege.Text,
+                    Multiplier = Convert.ToDouble(textBoxMultiplier.Text)
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Введите корректные значения", MessageBoxButtons.OK,
+                                       MessageBoxIcon.Error);
+            }
             LoadData();
         }
 
@@ -95,13 +103,21 @@ namespace View
                MessageBoxIcon.Error);
                 return;
             }
-            service.UpdElement(new Privilege
+            try
             {
-                Id = id,
-                NamePrivilege = textBoxNamePrivilege.Text,
-                TypePrivilege = comboBoxTypePrivilege.Text,
-                Multiplier = Convert.ToDouble(textBoxMultiplier.Text)
-            });
+                service.UpdElement(new Privilege
+                {
+                    Id = id,
+                    NamePrivilege = textBoxNamePrivilege.Text,
+                    TypePrivilege = comboBoxTypePrivilege.Text,
+                    Multiplier = Convert.ToDouble(textBoxMultiplier.Text)
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Введите корректные значения", MessageBoxButtons.OK,
+                                       MessageBoxIcon.Error);
+            }
             LoadData();
         }
 

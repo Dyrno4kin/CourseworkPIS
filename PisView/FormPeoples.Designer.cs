@@ -38,8 +38,18 @@
             this.buttonSelectByHouseNumber = new System.Windows.Forms.Button();
             this.buttonSelectByCountPeople = new System.Windows.Forms.Button();
             this.buttonAverageLivingSpace = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonTradeApartment = new System.Windows.Forms.Button();
+            this.comboBoxNumberHouse1 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxNumberApartment1 = new System.Windows.Forms.ComboBox();
+            this.labelNumberApartment = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comboBoxNumberApartment2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxNumberHouse2 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -52,7 +62,7 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowTemplate.Height = 24;
-            this.dataGridView.Size = new System.Drawing.Size(495, 316);
+            this.dataGridView.Size = new System.Drawing.Size(495, 276);
             this.dataGridView.TabIndex = 15;
             // 
             // buttonUpd
@@ -146,23 +156,125 @@
             this.buttonAverageLivingSpace.UseVisualStyleBackColor = true;
             this.buttonAverageLivingSpace.Click += new System.EventHandler(this.buttonAverageLivingSpace_Click);
             // 
-            // button1
+            // buttonTradeApartment
             // 
-            this.button1.Location = new System.Drawing.Point(512, 301);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(179, 25);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "Обновить";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonTradeApartment.Location = new System.Drawing.Point(5, 73);
+            this.buttonTradeApartment.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonTradeApartment.Name = "buttonTradeApartment";
+            this.buttonTradeApartment.Size = new System.Drawing.Size(375, 25);
+            this.buttonTradeApartment.TabIndex = 21;
+            this.buttonTradeApartment.Text = "Обменять квартиры";
+            this.buttonTradeApartment.UseVisualStyleBackColor = true;
+            this.buttonTradeApartment.Click += new System.EventHandler(this.buttonTradeApartment_Click);
+            // 
+            // comboBoxNumberHouse1
+            // 
+            this.comboBoxNumberHouse1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxNumberHouse1.FormattingEnabled = true;
+            this.comboBoxNumberHouse1.Items.AddRange(new object[] {
+            "Радищева 44",
+            "Орлова 26"});
+            this.comboBoxNumberHouse1.Location = new System.Drawing.Point(86, 18);
+            this.comboBoxNumberHouse1.Name = "comboBoxNumberHouse1";
+            this.comboBoxNumberHouse1.Size = new System.Drawing.Size(128, 21);
+            this.comboBoxNumberHouse1.TabIndex = 25;
+            this.comboBoxNumberHouse1.SelectedValueChanged += new System.EventHandler(this.comboBoxNumberHouse1_SelectedValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 21);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(76, 13);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "Номер дома :";
+            // 
+            // comboBoxNumberApartment1
+            // 
+            this.comboBoxNumberApartment1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxNumberApartment1.FormattingEnabled = true;
+            this.comboBoxNumberApartment1.Location = new System.Drawing.Point(320, 18);
+            this.comboBoxNumberApartment1.Name = "comboBoxNumberApartment1";
+            this.comboBoxNumberApartment1.Size = new System.Drawing.Size(60, 21);
+            this.comboBoxNumberApartment1.TabIndex = 23;
+            // 
+            // labelNumberApartment
+            // 
+            this.labelNumberApartment.AutoSize = true;
+            this.labelNumberApartment.Location = new System.Drawing.Point(219, 21);
+            this.labelNumberApartment.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelNumberApartment.Name = "labelNumberApartment";
+            this.labelNumberApartment.Size = new System.Drawing.Size(96, 13);
+            this.labelNumberApartment.TabIndex = 22;
+            this.labelNumberApartment.Text = "Номер квартиры:";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.buttonTradeApartment);
+            this.groupBox1.Controls.Add(this.comboBoxNumberApartment2);
+            this.groupBox1.Controls.Add(this.comboBoxNumberHouse2);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.comboBoxNumberApartment1);
+            this.groupBox1.Controls.Add(this.comboBoxNumberHouse1);
+            this.groupBox1.Controls.Add(this.labelNumberApartment);
+            this.groupBox1.Location = new System.Drawing.Point(12, 314);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(389, 108);
+            this.groupBox1.TabIndex = 26;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Обмен квартирами";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(76, 13);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Номер дома :";
+            // 
+            // comboBoxNumberApartment2
+            // 
+            this.comboBoxNumberApartment2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxNumberApartment2.FormattingEnabled = true;
+            this.comboBoxNumberApartment2.Location = new System.Drawing.Point(320, 47);
+            this.comboBoxNumberApartment2.Name = "comboBoxNumberApartment2";
+            this.comboBoxNumberApartment2.Size = new System.Drawing.Size(60, 21);
+            this.comboBoxNumberApartment2.TabIndex = 27;
+            // 
+            // comboBoxNumberHouse2
+            // 
+            this.comboBoxNumberHouse2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxNumberHouse2.FormattingEnabled = true;
+            this.comboBoxNumberHouse2.Items.AddRange(new object[] {
+            "Радищева 44",
+            "Орлова 26"});
+            this.comboBoxNumberHouse2.Location = new System.Drawing.Point(86, 47);
+            this.comboBoxNumberHouse2.Name = "comboBoxNumberHouse2";
+            this.comboBoxNumberHouse2.Size = new System.Drawing.Size(128, 21);
+            this.comboBoxNumberHouse2.TabIndex = 29;
+            this.comboBoxNumberHouse2.SelectedValueChanged += new System.EventHandler(this.comboBoxNumberHouse2_SelectedValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(219, 50);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(96, 13);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "Номер квартиры:";
             // 
             // FormPeoples
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(702, 365);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(697, 426);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonAverageLivingSpace);
             this.Controls.Add(this.buttonSelectByCountPeople);
             this.Controls.Add(this.buttonSelectByHouseNumber);
@@ -177,6 +289,8 @@
             this.Text = "Список жильцов";
             this.Load += new System.EventHandler(this.FormPeoples_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,6 +308,15 @@
         private System.Windows.Forms.Button buttonSelectByHouseNumber;
         private System.Windows.Forms.Button buttonSelectByCountPeople;
         private System.Windows.Forms.Button buttonAverageLivingSpace;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonTradeApartment;
+        private System.Windows.Forms.ComboBox comboBoxNumberHouse1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBoxNumberApartment1;
+        private System.Windows.Forms.Label labelNumberApartment;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBoxNumberApartment2;
+        private System.Windows.Forms.ComboBox comboBoxNumberHouse2;
+        private System.Windows.Forms.Label label3;
     }
 }

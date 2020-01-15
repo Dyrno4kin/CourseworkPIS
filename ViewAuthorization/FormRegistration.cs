@@ -3,8 +3,7 @@ using Controllers;
 using System;
 using System.Windows.Forms;
 using Unity;
-
-namespace View
+namespace ViewAuthorization
 {
     public partial class FormRegistration : Form
     {

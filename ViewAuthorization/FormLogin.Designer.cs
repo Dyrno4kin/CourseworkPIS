@@ -1,4 +1,4 @@
-﻿namespace View
+﻿namespace ViewAuthorization
 {
     partial class FormLogin
     {

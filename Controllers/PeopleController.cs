@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Controllers
 {
@@ -82,9 +83,6 @@ namespace Controllers
                     {
                         throw new Exception("Уже есть жилец с таким ФИО");
                     }
-
-
-
                     element = new People
                     {
                         FIO = model.FIO,
@@ -239,7 +237,7 @@ namespace Controllers
         }
 
         // Поиск по фамилии или номеру квартиры
-        public List<PeopleViewModel> SearchByFIO(string Fio)
+        public List<PeopleViewModel> Search(string Fio)
         {
             int NumberApart = -1;
             int num;
@@ -295,23 +293,31 @@ namespace Controllers
             return result;
         }
 
-   
+        //Обмен квартирами
         public void TradeApartment(int apart1, int apart2)
         {
-            var updateAparts = context.Peoples.Where(rec =>
-                   rec.ApartmentId == apart1);
-            foreach (var updateApart in updateAparts)
+            try
             {
-                updateApart.ApartmentId = apart2;
-            }
+                var updateAparts = context.Peoples.Where(rec =>
+                       rec.ApartmentId == apart1);
+                foreach (var updateApart in updateAparts)
+                {
+                    updateApart.ApartmentId = apart2;
+                }
 
-            var updateApartments = context.Peoples.Where(rec =>
-                   rec.ApartmentId == apart2);
-            foreach (var updateApartment in updateApartments)
-            {
-                updateApartment.ApartmentId = apart1;
+                var updateApartments = context.Peoples.Where(rec =>
+                       rec.ApartmentId == apart2);
+                foreach (var updateApartment in updateApartments)
+                {
+                    updateApartment.ApartmentId = apart1;
+                }
+                context.SaveChanges();
+                MessageBox.Show("Обмен произошел успешно");
             }
-            context.SaveChanges();
+            catch
+            {
+                MessageBox.Show("ERROR");
+            }
         }
     }
 }
