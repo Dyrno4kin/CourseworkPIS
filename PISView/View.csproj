@@ -96,12 +96,6 @@
     <Compile Include="FormInfo.Designer.cs">
       <DependentUpon>FormInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormLogin.Designer.cs">
-      <DependentUpon>FormLogin.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,12 +107,6 @@
     </Compile>
     <Compile Include="FormPeople.Designer.cs">
       <DependentUpon>FormPeople.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormPeoplePrivilege.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormPeoplePrivilege.Designer.cs">
-      <DependentUpon>FormPeoplePrivilege.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPeoples.cs">
       <SubType>Form</SubType>
@@ -132,23 +120,11 @@
     <Compile Include="FormPrivilege.Designer.cs">
       <DependentUpon>FormPrivilege.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormRegistration.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormRegistration.Designer.cs">
-      <DependentUpon>FormRegistration.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormReport.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormReport.Designer.cs">
       <DependentUpon>FormReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormStart.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormStart.Designer.cs">
-      <DependentUpon>FormStart.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -156,17 +132,11 @@
     <EmbeddedResource Include="FormInfo.resx">
       <DependentUpon>FormInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormLogin.resx">
-      <DependentUpon>FormLogin.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPeople.resx">
       <DependentUpon>FormPeople.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormPeoplePrivilege.resx">
-      <DependentUpon>FormPeoplePrivilege.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPeoples.resx">
       <DependentUpon>FormPeoples.cs</DependentUpon>
@@ -174,14 +144,8 @@
     <EmbeddedResource Include="FormPrivilege.resx">
       <DependentUpon>FormPrivilege.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormRegistration.resx">
-      <DependentUpon>FormRegistration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormReport.resx">
       <DependentUpon>FormReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormStart.resx">
-      <DependentUpon>FormStart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -43,9 +43,6 @@ namespace View
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             try
             {
-
-                
-
                 List<Privilege> listPrivilege = servicePrivilege.GetList();
                 if (listPrivilege != null)
                 {
@@ -63,7 +60,6 @@ namespace View
 
             if (id.HasValue)
             {
-
                 try
                 {
                     PeopleViewModel view = service.GetElement(id.Value);
