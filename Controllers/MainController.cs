@@ -48,7 +48,8 @@ namespace Controllers
 
         public User GetElement(string login, string password)
         {
-            User element = context.Users.FirstOrDefault(rec => rec.Login == login && rec.Password == password);
+            string pass = encryptionService.Encrypt("Login", password);
+            User element = context.Users.FirstOrDefault(rec => rec.Login == login && rec.Password == pass);
             if (element != null)
             {
                 return new User
@@ -56,7 +57,7 @@ namespace Controllers
                     Id = element.Id,
                     UserFIO = element.UserFIO,
                     Login = element.Login,
-                    Password = encryptionService.Encrypt("Login", model.Password),
+                    Password = element.Password,
                     UserRole = element.UserRole
                 };
             }
