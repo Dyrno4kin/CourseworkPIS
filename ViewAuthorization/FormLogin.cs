@@ -34,26 +34,22 @@ namespace ViewAuthorization
             try
             {
                 User view = mainService.GetElement(textBoxLogin.Text, textBoxPassword.Text);
-                if (!string.IsNullOrEmpty(view.UserFIO))
+                if (view.UserRole == "Пасспортист")
                 {
-
-                    if (view.UserRole == "Пасспортист")
-                    {
-                        this.Visible = false;
-                        FormStart formStart = new FormStart();
-                        formStart.Dispose();
-                        var form = Container.Resolve<FormMain>();
-                        form.fio = view.UserFIO;
-                        form.ShowDialog();
-                    }
-                    if (view.UserRole == "Бухгалтер")
-                    {
-                        MessageBox.Show("ARM Бухгалтера в данный момент недоступна", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    if (view.UserRole == "Руководитель")
-                    {
-                        MessageBox.Show("АРМ Руководителя в данный момент недоступна", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    this.Visible = false;
+                    FormStart formStart = new FormStart();
+                    formStart.Dispose();
+                    var form = Container.Resolve<FormMain>();
+                    form.fio = view.UserFIO;
+                    form.ShowDialog();
+                }
+                if (view.UserRole == "Бухгалтер")
+                {
+                    MessageBox.Show("ARM Бухгалтера в данный момент недоступна", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                if (view.UserRole == "Руководитель")
+                {
+                    MessageBox.Show("АРМ Руководителя в данный момент недоступна", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
