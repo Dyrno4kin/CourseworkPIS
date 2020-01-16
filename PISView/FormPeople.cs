@@ -51,6 +51,14 @@ namespace View
                     comboBoxPrivilege.DataSource = listPrivilege;
                     comboBoxPrivilege.SelectedItem = null;
                 }
+
+                List<ReportViewModel> listNumberHouse = service.GetListNumberHouse();
+                if (listNumberHouse != null)
+                {
+                    comboBoxNumberHouse.DisplayMember = "Adres";
+                    comboBoxNumberHouse.DataSource = listNumberHouse;
+                    comboBoxNumberHouse.SelectedItem = null;
+                }
             }
             catch (Exception ex)
             {
