@@ -8,9 +8,12 @@ namespace Controllers
     public class MainController
     {
         private PisDbContext context;
-        public MainController(PisDbContext context)
+        private readonly EncryptionController encryptionService;
+
+        public MainController(PisDbContext context, EncryptionController encryptionService)
         {
             this.context = context;
+            this.encryptionService = encryptionService;
         }
 
         public List<User> GetList()
@@ -53,7 +56,7 @@ namespace Controllers
                     Id = element.Id,
                     UserFIO = element.UserFIO,
                     Login = element.Login,
-                    Password = element.Password,
+                    Password = encryptionService.Encrypt("Login", model.Password),
                     UserRole = element.UserRole
                 };
             }

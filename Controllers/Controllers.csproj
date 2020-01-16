@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EncryptionController.cs" />
     <Compile Include="MainController.cs" />
     <Compile Include="PeopleController.cs" />
     <Compile Include="PrivilegeController.cs" />
