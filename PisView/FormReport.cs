@@ -64,7 +64,7 @@ namespace View
             label2.Text = "Всего льгот: " + Convert.ToString(sum);
 
             string title = "Распределение льготников по квартирам и видам льгот с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
-            if (dateTimePicker1.Value >= dateTimePicker2.Value)
+            if (dateTimePicker1.Value.Date >= dateTimePicker2.Value.Date)
             {
                 MessageBox.Show("Дата начала должна быть меньше даты окончания",
                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -93,7 +93,7 @@ namespace View
             chart1.DataBind();
 
             string title = "Диаграмма количества жильцов в каждой квартире с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
-            if (dateTimePicker1.Value >= dateTimePicker2.Value)
+            if (dateTimePicker1.Value.Date >= dateTimePicker2.Value.Date)
             {
                 MessageBox.Show("Дата начала должна быть меньше даты окончания",
                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -154,7 +154,7 @@ namespace View
             label2.Text = "Всего жильцов: " + Convert.ToString(sum);
 
             string title = "Поквартирный список с расчетом количества жильцов в каждой квартире с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
-            if (dateTimePicker1.Value >= dateTimePicker2.Value)
+            if (dateTimePicker1.Value.Date >= dateTimePicker2.Value.Date)
             {
                 MessageBox.Show("Дата начала должна быть меньше даты окончания",
                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -206,7 +206,7 @@ namespace View
             }
             label2.Text = "Членов семьи: " + Convert.ToString(dataGridView.RowCount.ToString());
             string title = "Справка о составе семьи жильца " + textBox1.Text + " с " + dateFrom + " по " + dateTo + " \n Текущая дата " + DateTime.Now + ".";
-            if (dateTimePicker1.Value >= dateTimePicker2.Value)
+            if (dateTimePicker1.Value.Date >= dateTimePicker2.Value.Date)
             {
                 MessageBox.Show("Дата начала должна быть меньше даты окончания",
                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);

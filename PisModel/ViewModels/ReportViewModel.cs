@@ -13,6 +13,5 @@ namespace Model.ViewModels
         public int NaVodu { get; set; }
         public int NaElectr { get; set; }
         public int NaObchedomovie { get; set; }
-
     }
 }

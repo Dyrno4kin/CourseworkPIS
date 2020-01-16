@@ -4,7 +4,7 @@ namespace Model
 {
     public class PisDbContext : DbContext
     {
-        public PisDbContext() : base("PisDatabase")
+        public PisDbContext() : base("PisDbContext")
         {
             //настройки конфигурации для entity
             Configuration.ProxyCreationEnabled = false;

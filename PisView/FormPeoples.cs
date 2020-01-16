@@ -51,6 +51,22 @@ namespace View
                     dataGridView.Columns[1].AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.Fill;
                 }
+
+                List<ReportViewModel> listNumberHouse1 = service.GetListNumberHouse();
+                if (listNumberHouse1 != null)
+                {
+                    comboBoxNumberHouse1.DisplayMember = "Adres";
+                    comboBoxNumberHouse1.DataSource = listNumberHouse1;
+                    comboBoxNumberHouse1.SelectedItem = null;
+                }
+
+                List<ReportViewModel> listNumberHouse2 = service.GetListNumberHouse();
+                if (listNumberHouse2 != null)
+                {
+                    comboBoxNumberHouse2.DisplayMember = "Adres";
+                    comboBoxNumberHouse2.DataSource = listNumberHouse2;
+                    comboBoxNumberHouse2.SelectedItem = null;
+                }
             }
             catch (Exception ex)
             {

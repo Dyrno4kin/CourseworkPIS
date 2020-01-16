@@ -235,6 +235,14 @@ namespace Controllers
             .ToList();
             return result;
         }
+        
+
+            public List<ReportViewModel> GetListNumberHouse()
+        {
+            var dt = context.Database.SqlQuery<ReportViewModel>("select Apartments.NumberHouse AS 'Adres' from Apartments group by Apartments.NumberHouse");
+            List<ReportViewModel> result = dt.ToList();
+            return result;
+        }
 
         // Поиск по фамилии или номеру квартиры
         public List<PeopleViewModel> Search(string Fio)
